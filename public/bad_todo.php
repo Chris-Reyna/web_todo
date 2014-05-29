@@ -1,5 +1,10 @@
-<!DOCTYPE html>
 
+<?php
+$filename='todo_list.txt';
+$items = array();
+
+?>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>TODO</title>
@@ -8,7 +13,7 @@
 	<h1>Things To Do</h1>
 	<ul>
 		<?php
-			$items = array('Take out the trash', 'Wash the car', 'Cut the grass', 'Shoot the dog'); 
+		 
 			foreach ($items as $key => $value) {
 				echo "<li>$value</li>";
 			}
