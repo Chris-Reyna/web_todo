@@ -3,6 +3,41 @@
 $filename='todo_list.txt';
 $items = array();
 
+var_dump($_GET);
+
+
+
+function openFile($filename) {
+	$handle = fopen($filename, "r");
+	$content = fread($handle, filesize($filename));
+	fclose($handle);
+	return explode("\n", $content);
+}
+
+function saveFile($filename, $items) {
+	if (is_writable($filename)){
+		$itemStr = implode("\n", $items);
+		$handle = fopen($filename, "w");
+		fwrite($handle, $itemStr);
+		fclose($handle);
+		
+	}
+}
+
+$items = openFile($filename);
+saveFile($filename,$items);
+
+if (isset($_GET['id'])){
+	unset($items[$_GET['id']]);
+	saveFile($filename, $items);
+}
+
+if (isset($_POST['TASK'])){
+	$item=$_POST['TASK'];
+	array_push($items,$item);
+	saveFile($filename,$items);
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +50,7 @@ $items = array();
 		<?php
 		 
 			foreach ($items as $key => $value) {
-				echo "<li>$value</li>";
+				echo "<li>$value | <a href='?id=$key'>Remove Completed Task</a></li>";
 			}
 		?>
 	</ul>
